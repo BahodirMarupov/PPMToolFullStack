@@ -7,6 +7,7 @@ import uz.pdp.ppmtoolserver.exception.ProjectIdException;
 import uz.pdp.ppmtoolserver.repository.ProjectRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProjectService {
@@ -15,11 +16,12 @@ public class ProjectService {
     private ProjectRepository repository;
 
     public Project save(Project project) {
+        String projectIdentifier=project.getProjectIdentifier();
         try {
             project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
             return repository.save(project);
         } catch (Exception e) {
-            throw new ProjectIdException("Project ID '"+project.getProjectIdentifier()+"' already exists!");
+            throw new ProjectIdException("Project ID '"+projectIdentifier+"' already exists!");
         }
     }
 
@@ -33,8 +35,9 @@ public class ProjectService {
     }
 
     public void deleteProject(String projectIdentifier) {
-        if (repository.existsByProjectIdentifier(projectIdentifier.toUpperCase())){
-            repository.deleteByProjectIdentifier(projectIdentifier.toUpperCase());
+        Optional<Project> optionalProject = repository.findByProjectIdentifier(projectIdentifier.toUpperCase());
+        if (optionalProject.isPresent()){
+            repository.delete(optionalProject.get());
         }
         else throw new ProjectIdException("This project does not exist!");
     }
