@@ -2,8 +2,11 @@ package uz.pdp.ppmtoolserver.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import uz.pdp.ppmtoolserver.domain.Backlog;
 import uz.pdp.ppmtoolserver.domain.Project;
+import uz.pdp.ppmtoolserver.exception.BacklogNotFoundException;
 import uz.pdp.ppmtoolserver.exception.ProjectIdException;
+import uz.pdp.ppmtoolserver.repository.BacklogRepository;
 import uz.pdp.ppmtoolserver.repository.ProjectRepository;
 
 import java.util.List;
@@ -14,11 +17,23 @@ public class ProjectService {
 
     @Autowired
     private ProjectRepository repository;
+    @Autowired
+    private BacklogRepository backlogRepository;
 
     public Project save(Project project) {
         String projectIdentifier=project.getProjectIdentifier();
         try {
             project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
+            if (project.getId()==null){
+                Backlog backlog=new Backlog();
+                project.setBacklog(backlog);
+                backlog.setProject(project);
+                backlog.setProjectIdentifier(projectIdentifier.toUpperCase());
+//                backlogRepository.save(backlog);
+            }
+            else {
+                project.setBacklog(backlogRepository.findByProjectIdentifier(projectIdentifier.toUpperCase()).orElseThrow(() -> new BacklogNotFoundException("Error")));
+            }
             return repository.save(project);
         } catch (Exception e) {
             throw new ProjectIdException("Project ID '"+projectIdentifier+"' already exists!");

@@ -1,6 +1,7 @@
 package uz.pdp.ppmtoolserver.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,6 +31,10 @@ public class Project {
 
     @NotBlank(message = "Description is required!")
     private String description;
+
+    @OneToOne(mappedBy = "project",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Backlog backlog;
 
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date startDate;
