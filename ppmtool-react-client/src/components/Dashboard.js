@@ -48,6 +48,4 @@ const mapStateToProps = (state) => ({
   projects: state.projects.allProjects,
 });
 
-export default connect(mapStateToProps, { getProjects, clearErrors })(
-  Dashboard
-);
+export default connect(mapStateToProps, { getProjects, clearErrors })(Dashboard);

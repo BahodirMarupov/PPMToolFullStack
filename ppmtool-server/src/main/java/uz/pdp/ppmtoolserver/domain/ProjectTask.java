@@ -1,5 +1,6 @@
 package uz.pdp.ppmtoolserver.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,6 +30,7 @@ public class ProjectTask {
     private String acceptanceCriteria;
     private String status;
     private Integer priority;
+    @JsonFormat(pattern = "yyyy-mm-dd")
     private Date dueDate;
 
     //ManyToOne with Backlog
@@ -41,8 +43,10 @@ public class ProjectTask {
     private String projectIdentifier;
 
     @CreationTimestamp
+    @JsonFormat(pattern = "yyyy-mm-dd")
     private Date createdAt;
     @UpdateTimestamp
+    @JsonFormat(pattern = "yyyy-mm-dd")
     private Date updatedAt;
 
 }

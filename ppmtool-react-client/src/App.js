@@ -7,7 +7,10 @@ import Dashboard from "./components/Dashboard";
 import AddProject from "./components/project/AddProject";
 import { Provider } from "react-redux";
 import store from "./store";
-import updateProject from "./components/project/updateProject";
+import UpdateProject from "./components/project/UpdateProject";
+import ProjectBoard from "./components/projectBoard/ProjectBoard";
+import AddProjectTask from "./components/projectBoard/projectTask/AddProjectTask";
+import UpdateProjectTask from "./components/projectBoard/projectTask/UpdateProjectTask";
 
 function App() {
   return (
@@ -17,7 +20,10 @@ function App() {
           <Header />
           <Route exact path="/dashboard" component={Dashboard} />
           <Route exact path="/addProject" component={AddProject} />
-          <Route exact path="/updateProject/:id" component={updateProject} />
+          <Route exact path="/updateProject/:id" component={UpdateProject} />
+          <Route exact path="/projectBoard/:id" component={ProjectBoard}/>
+          <Route exact path="/addProjectTask/:id/" component={AddProjectTask}/>
+          <Route exact path="/updateProjectTask/:id/:task_id" component={UpdateProjectTask}/>
         </div>
       </BrowserRouter>
     </Provider>

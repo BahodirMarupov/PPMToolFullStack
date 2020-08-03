@@ -32,7 +32,6 @@ class UpdateProject extends Component {
     this.props.createProject(newProject, this.props.history);
   };
   componentDidMount() {
-    console.log(this.props.match.params.id);
     this.props.getProject(this.props.match.params.id);
   }
 

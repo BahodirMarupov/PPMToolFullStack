@@ -28,12 +28,10 @@ public class ProjectTaskService {
         projectTask.setProjectSequence(projectIdentifier + "-" + backlog.getPTSequence());
         projectTask.setProjectIdentifier(projectIdentifier);
 
-        if (projectTask.getPriority() == null) {  // projectTask.getPriority()==0
+        if (projectTask.getPriority() == null || projectTask.getPriority() == 0) {
             projectTask.setPriority(3);
         }
-        if (projectTask.getStatus().equals("") || projectTask.getStatus() == null) {
-            projectTask.setStatus("TO_DO");
-        }
+        projectTask.setStatus("TO_DO");
         return repository.save(projectTask);
     }
 
@@ -45,25 +43,25 @@ public class ProjectTaskService {
     }
 
     public ProjectTask findByProjectSequence(String projectSequence, String backlog_id) {
-        return checkProjectTask(backlog_id,projectSequence);
+        return checkProjectTask(backlog_id, projectSequence);
     }
 
     public ProjectTask updateProjectTask(String backlog_id, String projectSequence, ProjectTask updatedTask) {
-        checkProjectTask(backlog_id,projectSequence);
+        checkProjectTask(backlog_id, projectSequence);
         return repository.save(updatedTask);
     }
 
     public void deleteProjectTask(String backlog_id, String projectSequence) {
-        repository.delete(checkProjectTask(backlog_id,projectSequence));
+        repository.delete(checkProjectTask(backlog_id, projectSequence));
     }
 
-    private  ProjectTask checkProjectTask(String backlog_id, String projectSequence){
+    private ProjectTask checkProjectTask(String backlog_id, String projectSequence) {
         if (!backlogRepository.existsByProjectIdentifier(backlog_id)) {
             throw new BacklogNotFoundException("Project with ID " + backlog_id + " does not exist");
         }
         ProjectTask projectTask = repository.findByProjectSequence(projectSequence).orElseThrow(() -> new BacklogNotFoundException("Project task " + projectSequence + " not found"));
         if (!projectTask.getProjectIdentifier().equals(backlog_id)) {
-            throw new BacklogNotFoundException("Project task " + projectSequence + " does not exist in project: "+backlog_id);
+            throw new BacklogNotFoundException("Project task " + projectSequence + " does not exist in project: " + backlog_id);
         }
         return projectTask;
     }
