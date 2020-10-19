@@ -36,6 +36,11 @@ public class Project {
     @JsonIgnore
     private Backlog backlog;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private User user;
+
+    private String projectLeader;
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date startDate;
     @JsonFormat(pattern = "yyyy-mm-dd")
