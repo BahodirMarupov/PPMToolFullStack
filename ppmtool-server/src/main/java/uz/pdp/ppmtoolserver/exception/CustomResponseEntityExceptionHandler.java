@@ -1,5 +1,6 @@
 package uz.pdp.ppmtoolserver.exception;
 
+import org.omg.CORBA.UserException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -22,5 +23,11 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     public final ResponseEntity<?> handleBacklogNotFoundException(BacklogNotFoundException exception,WebRequest request){
         BacklogExceptionResponse backlogExceptionResponse=new BacklogExceptionResponse(exception.getMessage());
         return new ResponseEntity<>(backlogExceptionResponse,HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    public final ResponseEntity<?> handleUsernameException(UserException exception){
+        UsernameExceptionResponse exceptionResponse=new UsernameExceptionResponse(exception.getMessage());
+        return new ResponseEntity<>(exceptionResponse,HttpStatus.BAD_REQUEST);
     }
 }

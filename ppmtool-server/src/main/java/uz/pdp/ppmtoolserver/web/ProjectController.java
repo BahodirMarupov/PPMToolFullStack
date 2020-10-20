@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.ppmtoolserver.domain.Project;
+import uz.pdp.ppmtoolserver.domain.User;
+import uz.pdp.ppmtoolserver.security.CurrentUser;
 import uz.pdp.ppmtoolserver.service.MapValidationErrorsService;
 import uz.pdp.ppmtoolserver.service.ProjectService;
 
@@ -23,10 +25,11 @@ public class ProjectController {
     private MapValidationErrorsService errorsService;
 
     @PostMapping("")
-    public ResponseEntity<?> createNewProject(@Valid @RequestBody Project project, BindingResult result){
+    public ResponseEntity<?> createNewProject(@Valid @RequestBody Project project,
+                                              BindingResult result, @CurrentUser User user){
 
         if (result.hasErrors()) return errorsService.mapValidateErrors(result);
-        Project project1=service.save(project);
+        Project project1=service.save(project,user);
         return new ResponseEntity<>(project1, HttpStatus.CREATED);
     }
 
