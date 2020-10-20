@@ -43,7 +43,19 @@ public class User implements UserDetails {
     @UpdateTimestamp
     private Date updatedAt;
 
+    public User() {
+    }
 
+    public User(Long id, @Email(message = "Username needs to be an email!") @NotBlank(message = "Username is required!") String username, @NotBlank(message = "Full name is required!") String fullName, @NotBlank(message = "Password field is required!") String password, String confirmPassword, List<Project> projects, Date createdAt, Date updatedAt) {
+        this.id = id;
+        this.username = username;
+        this.fullName = fullName;
+        this.password = password;
+        this.confirmPassword = confirmPassword;
+        this.projects = projects;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
