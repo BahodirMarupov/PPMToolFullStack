@@ -10,7 +10,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import static uz.pdp.ppmtoolserver.security.SecurityConstraints.EXPIRE_TIME;
 import static uz.pdp.ppmtoolserver.security.SecurityConstraints.JWT_KEY;
 
 @Component
@@ -19,7 +18,10 @@ public class JwtTokenProvider {
     public String generateToken(Authentication authentication){
         User user=(User) authentication.getPrincipal();
         Date now=new Date(System.currentTimeMillis());
-        Date expireDate=new Date(System.currentTimeMillis()+EXPIRE_TIME);
+
+        Date expireDate=new Date(now.getTime()+3*24*60*60*1000);
+        System.out.println(now);
+        System.out.println(expireDate);
         String userId= String.valueOf(user.getId());
         Map<String,Object> claims=new HashMap<>();
         claims.put("id",userId);
@@ -31,7 +33,7 @@ public class JwtTokenProvider {
                 .setClaims(claims)
                 .setIssuedAt(now)
                 .setExpiration(expireDate)
-                .signWith(SignatureAlgorithm.ES512,JWT_KEY)
+                .signWith(SignatureAlgorithm.HS512,JWT_KEY)
                 .compact();
 
     }

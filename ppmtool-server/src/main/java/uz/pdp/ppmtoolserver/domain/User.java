@@ -1,5 +1,6 @@
 package uz.pdp.ppmtoolserver.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -38,8 +39,10 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user",cascade = CascadeType.REFRESH,fetch = FetchType.EAGER,orphanRemoval = true)
     private List<Project> projects=new ArrayList<>();
 
+    @JsonIgnore
     @CreationTimestamp
     private Date createdAt;
+    @JsonIgnore
     @UpdateTimestamp
     private Date updatedAt;
 
@@ -58,6 +61,7 @@ public class User implements UserDetails {
     }
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
     }
@@ -73,16 +77,19 @@ public class User implements UserDetails {
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
     }

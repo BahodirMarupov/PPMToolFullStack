@@ -27,19 +27,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
     @Bean
-    public BCryptPasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
+    public JwtAuthenticationFilter jwtAuthenticationFilter() {
+        return new JwtAuthenticationFilter();
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
-    }
-
-    @Bean
-    public JwtAuthenticationFilter jwtAuthenticationFilter(){
-        return new JwtAuthenticationFilter();
+        auth.userDetailsService(userService).passwordEncoder(passwordEncoder);
     }
 
     @Override
@@ -68,8 +66,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.html",
                         "/**/*.css",
                         "/**/*.js")
-                .permitAll()
-                .antMatchers("/api/users/login")
                 .permitAll()
                 .antMatchers(SecurityConstraints.SIGN_UP_URL)
                 .permitAll()

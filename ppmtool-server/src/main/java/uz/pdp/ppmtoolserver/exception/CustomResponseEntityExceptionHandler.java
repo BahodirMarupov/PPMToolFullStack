@@ -1,6 +1,5 @@
 package uz.pdp.ppmtoolserver.exception;
 
-import org.omg.CORBA.UserException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -26,7 +25,7 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     }
 
     @ExceptionHandler
-    public final ResponseEntity<?> handleUsernameException(UserException exception){
+    public final ResponseEntity<?> handleUsernameException(UsernameException exception){
         UsernameExceptionResponse exceptionResponse=new UsernameExceptionResponse(exception.getMessage());
         return new ResponseEntity<>(exceptionResponse,HttpStatus.BAD_REQUEST);
     }
