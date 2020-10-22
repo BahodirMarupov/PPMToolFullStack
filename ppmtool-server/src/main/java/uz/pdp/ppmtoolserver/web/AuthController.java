@@ -14,13 +14,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uz.pdp.ppmtoolserver.domain.User;
+import uz.pdp.ppmtoolserver.payload.JwtLoginSuccessResponse;
 import uz.pdp.ppmtoolserver.payload.ReqLogin;
+import uz.pdp.ppmtoolserver.security.JwtTokenProvider;
 import uz.pdp.ppmtoolserver.service.MapValidationErrorsService;
 import uz.pdp.ppmtoolserver.service.UserService;
 import uz.pdp.ppmtoolserver.validator.UserValidator;
 
 import javax.validation.Valid;
 import java.util.concurrent.locks.ReentrantLock;
+
+import static uz.pdp.ppmtoolserver.security.SecurityConstraints.TOKEN_PREFIX;
 
 @Controller
 @RequestMapping("/api/users")
@@ -34,6 +38,8 @@ public class AuthController {
     private AuthenticationManager authenticationManager;
     @Autowired
     private UserValidator validator;
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody ReqLogin reqLogin, BindingResult result) {
@@ -48,8 +54,8 @@ public class AuthController {
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         //  JWT
-
-        return null;
+        String token=TOKEN_PREFIX+jwtTokenProvider.generateToken(authentication);
+        return ResponseEntity.ok(new JwtLoginSuccessResponse(true,token));
     }
 
     @PostMapping("/register")

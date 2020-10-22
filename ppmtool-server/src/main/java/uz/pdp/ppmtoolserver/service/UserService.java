@@ -35,7 +35,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public UserDetails loadUserById(Long id) {
+    public User loadUserById(Long id) {
         return repository.findById(id).orElseThrow(() -> new UsernameNotFoundException("User not found!"));
     }
 
