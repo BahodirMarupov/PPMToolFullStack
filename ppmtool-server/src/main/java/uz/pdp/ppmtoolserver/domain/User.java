@@ -46,6 +46,7 @@ public class User implements UserDetails {
     @UpdateTimestamp
     private Date updatedAt;
 
+
     public User() {
     }
 
