@@ -1,22 +1,20 @@
 package uz.pdp.ppmtoolserver.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import uz.pdp.ppmtoolserver.domain.audit.UserDateAudit;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User implements UserDetails {
+public class User extends UserDateAudit implements UserDetails{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,28 +36,6 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.REFRESH,fetch = FetchType.EAGER,orphanRemoval = true)
     private List<Project> projects=new ArrayList<>();
-
-    @JsonIgnore
-    @CreationTimestamp
-    private Date createdAt;
-    @JsonIgnore
-    @UpdateTimestamp
-    private Date updatedAt;
-
-
-    public User() {
-    }
-
-    public User(Long id, @Email(message = "Username needs to be an email!") @NotBlank(message = "Username is required!") String username, @NotBlank(message = "Full name is required!") String fullName, @NotBlank(message = "Password field is required!") String password, String confirmPassword, List<Project> projects, Date createdAt, Date updatedAt) {
-        this.id = id;
-        this.username = username;
-        this.fullName = fullName;
-        this.password = password;
-        this.confirmPassword = confirmPassword;
-        this.projects = projects;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
 
     @Override
     @JsonIgnore
@@ -135,23 +111,8 @@ public class User implements UserDetails {
         this.projects = projects;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
     @Override
+    @JsonIgnore
     public boolean isEnabled() {
         return true;
     }
