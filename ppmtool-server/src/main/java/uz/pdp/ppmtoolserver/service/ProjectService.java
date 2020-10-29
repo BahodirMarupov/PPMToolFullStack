@@ -30,10 +30,10 @@ public class ProjectService {
             project.setBacklog(backlog);
             backlog.setProject(project);
             backlog.setProjectIdentifier(projectIdentifier.toUpperCase());
-//                backlogRepository.save(backlog);
         } else {
             Optional<Project> optionalProject = repository.findById(project.getId());
-            if (optionalProject.isPresent() && optionalProject.get().getProjectLeader().equals(user.getUsername())) {
+            if (optionalProject.isPresent() && optionalProject.get().getProjectLeader()
+                    .equals(user.getUsername())) {
                 if (!optionalProject.get().getProjectIdentifier().equals(project.getProjectIdentifier()))
                     throw new ProjectNotFoundException("Project with ID: " + projectIdentifier
                             + " cannot be updated because it doesn't exist!");

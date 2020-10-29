@@ -2,14 +2,14 @@ package uz.pdp.ppmtoolserver.payload;
 
 public class JwtLoginSuccessResponse {
     private boolean success;
-    private String message;
+    private String token;
 
     public JwtLoginSuccessResponse() {
     }
 
-    public JwtLoginSuccessResponse(boolean success, String message) {
+    public JwtLoginSuccessResponse(boolean success, String token) {
         this.success = success;
-        this.message = message;
+        this.token = token;
     }
 
     public boolean isSuccess() {
@@ -20,11 +20,11 @@ public class JwtLoginSuccessResponse {
         this.success = success;
     }
 
-    public String getMessage() {
-        return message;
+    public String getToken() {
+        return token;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setToken(String token) {
+        this.token = token;
     }
 }

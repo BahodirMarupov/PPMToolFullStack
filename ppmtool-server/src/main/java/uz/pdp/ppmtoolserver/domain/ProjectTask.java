@@ -2,8 +2,7 @@ package uz.pdp.ppmtoolserver.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import uz.pdp.ppmtoolserver.domain.audit.UserDateAudit;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -11,7 +10,7 @@ import java.util.Date;
 
 @Entity
 
-public class ProjectTask {
+public class ProjectTask extends UserDateAudit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,17 +36,10 @@ public class ProjectTask {
     @Column(updatable = false)
     private String projectIdentifier;
 
-    @CreationTimestamp
-    @JsonFormat(pattern = "yyyy-mm-dd")
-    private Date createdAt;
-    @UpdateTimestamp
-    @JsonFormat(pattern = "yyyy-mm-dd")
-    private Date updatedAt;
-
     public ProjectTask() {
     }
 
-    public ProjectTask(Long id, String projectSequence, @NotBlank(message = "Please include a project task summary.") String summary, String acceptanceCriteria, String status, Integer priority, Date dueDate, Backlog backlog, String projectIdentifier, Date createdAt, Date updatedAt) {
+    public ProjectTask(Long id, String projectSequence, @NotBlank(message = "Please include a project task summary.") String summary, String acceptanceCriteria, String status, Integer priority, Date dueDate, Backlog backlog, String projectIdentifier) {
         this.id = id;
         this.projectSequence = projectSequence;
         this.summary = summary;
@@ -57,8 +49,6 @@ public class ProjectTask {
         this.dueDate = dueDate;
         this.backlog = backlog;
         this.projectIdentifier = projectIdentifier;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 
     public Long getId() {
@@ -133,19 +123,4 @@ public class ProjectTask {
         this.projectIdentifier = projectIdentifier;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
 }

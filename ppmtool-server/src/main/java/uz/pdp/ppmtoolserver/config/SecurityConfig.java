@@ -1,4 +1,4 @@
-package uz.pdp.ppmtoolserver.security;
+package uz.pdp.ppmtoolserver.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +12,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import uz.pdp.ppmtoolserver.security.JwtAuthenticationEntryPoint;
+import uz.pdp.ppmtoolserver.security.JwtAuthenticationFilter;
+import uz.pdp.ppmtoolserver.security.SecurityConstraints;
 import uz.pdp.ppmtoolserver.service.UserService;
 
 @Configuration

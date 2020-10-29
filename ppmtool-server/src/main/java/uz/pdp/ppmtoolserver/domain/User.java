@@ -3,7 +3,7 @@ package uz.pdp.ppmtoolserver.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import uz.pdp.ppmtoolserver.domain.audit.UserDateAudit;
+import uz.pdp.ppmtoolserver.domain.audit.DateAudit;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -14,7 +14,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User extends UserDateAudit implements UserDetails{
+public class User extends DateAudit implements UserDetails{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

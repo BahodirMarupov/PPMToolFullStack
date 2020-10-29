@@ -1,12 +1,14 @@
 package uz.pdp.ppmtoolserver.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import uz.pdp.ppmtoolserver.domain.audit.DateAudit;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Backlog {
+public class Backlog extends DateAudit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
