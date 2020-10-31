@@ -1,7 +1,54 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import { logout } from "../../actions/securityActions";
 
 class Header extends Component {
+
+  logout=()=>{
+    this.props.logout();
+    window.location.href="/"
+  }
+
+  signUpChecking = (security) => {
+
+    const { user, validToken } = security
+    const fullName = user.fullName;
+
+    if (validToken) {
+      return (<Link className="nav-link" to="/dashboard">
+        <i class="fas fa-user-circle mr-1"></i>
+        {fullName}
+      </Link>
+      )
+
+    }
+
+    else {
+      return (<Link className="nav-link " to="/register">
+        Sign Up
+      </Link>)
+    }
+  }
+
+  signInChecking = (security) => {
+
+    if (security.validToken) {
+      return (
+        <Link className="nav-link bg-red" onClick={this.logout}>
+          Logout
+        </Link>
+      )
+    }
+
+    return (
+      <Link className="nav-link" to="/login">
+        Login
+      </Link>
+    )
+  }
+
   render() {
     return (
       <nav className="navbar navbar-expand-sm navbar-dark bg-primary mb-4">
@@ -29,14 +76,10 @@ class Header extends Component {
 
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">
-                <Link className="nav-link " to="/register">
-                  Sign Up
-                </Link>
+                {this.signUpChecking(this.props.security)}
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/login">
-                  Login
-                </Link>
+                {this.signInChecking(this.props.security)}
               </li>
             </ul>
           </div>
@@ -46,4 +89,13 @@ class Header extends Component {
   }
 }
 
-export default Header;
+Header.propTypes = {
+  security: PropTypes.object.isRequired,
+  logout: PropTypes.func.isRequired
+}
+
+const mapStateToProps = (state) => ({
+  security: state.security
+})
+
+export default connect(mapStateToProps, { logout })(Header);

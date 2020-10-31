@@ -18,6 +18,7 @@ import jwt_decode from 'jwt-decode'
 import setJWToken from "./utils/setJWToken";
 import { SET_CURRENT_USER } from "./actions/types";
 import { logout } from "./actions/securityActions";
+import Footer from "./components/layout/Footer";
 
 
 const token = localStorage.jwtToken;
@@ -55,6 +56,7 @@ function App() {
           <Route exact path="/projectBoard/:id" component={ProjectBoard} />
           <Route exact path="/addProjectTask/:id/" component={AddProjectTask} />
           <Route exact path="/updateProjectTask/:id/:task_id" component={UpdateProjectTask} />
+          <Footer/>
         </div>
       </BrowserRouter>
     </Provider>
