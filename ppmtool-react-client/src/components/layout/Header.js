@@ -18,7 +18,7 @@ class Header extends Component {
 
     if (validToken) {
       return (<Link className="nav-link" to="/dashboard">
-        <i class="fas fa-user-circle mr-1"></i>
+        <i className="fas fa-user-circle mr-1"></i>
         {fullName}
       </Link>
       )
@@ -36,7 +36,7 @@ class Header extends Component {
 
     if (security.validToken) {
       return (
-        <Link className="nav-link bg-red" onClick={this.logout}>
+        <Link className="nav-link bg-red" onClick={this.logout} to="logout">
           Logout
         </Link>
       )

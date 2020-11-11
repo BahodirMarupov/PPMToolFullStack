@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "./components/layout/Header";
@@ -19,7 +19,7 @@ import setJWToken from "./utils/setJWToken";
 import { SET_CURRENT_USER } from "./actions/types";
 import { logout } from "./actions/securityActions";
 import Footer from "./components/layout/Footer";
-
+import 'react-app-polyfill/stable'
 
 const token = localStorage.jwtToken;
 
