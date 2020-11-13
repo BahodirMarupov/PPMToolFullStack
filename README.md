@@ -8,4 +8,4 @@
 - Spring Boot
 
 The app is deployed to heroku.
-https://liam-app-dictionary.herokuapp.com/
+https://liam-projectmanager.herokuapp.com/
