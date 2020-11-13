@@ -6,3 +6,6 @@
 - ReactJs
 - Redux
 - Spring Boot
+
+The app is deployed to heroku.
+https://liam-app-dictionary.herokuapp.com/
